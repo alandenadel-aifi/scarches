@@ -7,7 +7,8 @@ from typing import Optional, Union
 import numpy as np
 import torch
 from torch.distributions import Normal
-from anndata import AnnData, read
+import anndata as ad
+from anndata import AnnData
 from scipy.sparse import issparse
 
 from ._utils import UnpicklerCpu, _validate_var_names
@@ -173,7 +174,7 @@ class BaseMixin:
         load_adata = adata is None
 
         if os.path.exists(adata_path) and load_adata:
-            adata = read(adata_path)
+            adata = ad.read_h5ad(adata_path)
         elif not os.path.exists(adata_path) and load_adata:
             raise ValueError("Save path contains no saved anndata and no adata was passed.")
 
